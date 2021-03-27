@@ -132,4 +132,4 @@ dmypy.json
 .env
 /lib64
 pyvenv.cfg
-/vs.
+/.vs
