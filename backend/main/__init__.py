@@ -10,9 +10,29 @@ def create_app():
     app = Flask(__name__)
     load_dotenv()
 
+    api.add_resource(resources.BolsonesResource, '/bolsones')
+    api.add_resource(resources.BolsonResource, '/bolson/<id>')
 
+    api.add_resource(resources.BolsonesVentaResource, '/bolsonesventa')
+    api.add_resource(resources.BolsonVentaResource, '/bolsonventa/<id>')
 
+    api.add_resource(resources.BolsonesPendientesResource, '/bolsonesprendientes')
+    api.add_resource(resources.BolsonPendienteResource, '/bolsonpendiente/<id>')
 
+    api.add_resource(resources.BolsonesPreviosResource, '/bolsonesprevios')
+    api.add_resource(resources.BolsonPrevioResource, '/bolsonprevio/<id>')
+
+    api.add_resource(resources.ProductosResource, '/productos')
+    api.add_resource(resources.ProductoResource, '/producto/<id>')
+
+    api.add_resource(resources.ComprasResource, '/compras')
+    api.add_resource(resources.CompraResource, '/compra/<id>')
+
+    api.add_resource(resources.ClientesResource, '/clientes')
+    api.add_resource(resources.ClienteResource, '/cliente/<id>')
+
+    api.add_resource(resources.ProveedoresResource, '/proveedores')
+    api.add_resource(resources.ProveedorResource, '/proveedor/<id>')
 
     api.init_app(app)
     return app
