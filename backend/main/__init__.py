@@ -16,7 +16,7 @@ def create_app():
     api.add_resource(resources.BolsonesVentaResource, '/bolsones-venta')
     api.add_resource(resources.BolsonVentaResource, '/bolson-venta/<id>')
 
-    api.add_resource(resources.BolsonesPendientesResource, '/bolsones-prendientes')
+    api.add_resource(resources.BolsonesPendientesResource, '/bolsones-pendientes')
     api.add_resource(resources.BolsonPendienteResource, '/bolson-pendiente/<id>')
 
     api.add_resource(resources.BolsonesPreviosResource, '/bolsones-previos')
