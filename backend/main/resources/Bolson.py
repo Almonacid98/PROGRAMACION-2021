@@ -1,12 +1,12 @@
 from flask_restful import Resource
 from flask import request
 
-#Próximo diccionario
+#Prï¿½ximo diccionario
 
 
 
 
-#Recursos de Bolsón"
+#Recursos de Bolsï¿½n"
 class Bolson(Resource):
 
     def get(self, id):
