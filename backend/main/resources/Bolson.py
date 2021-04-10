@@ -3,8 +3,12 @@ from flask import request
 
 #Pr�ximo diccionario
 BOLSONES = {
-    1: {'name' : 'Juan', 'lastname' : 'Santiago'},
-    2: {'name' : 'Alvaro', 'lastname' : 'Perez'}
+    1: {'name' : 'Bolson A'},
+    2: {'name' : 'Bolson B'},
+    3: {'name' : 'Bolson C'},
+    4: {'name' : 'Bolson D'},
+    5: {'name' : 'Bolson E'},
+    6: {'name' : 'Bolson F'}
     }
 
 
