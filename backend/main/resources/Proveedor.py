@@ -8,7 +8,7 @@ from flask import request
 class Proveedor():
 
     def get(self, id):
-
+        if int(id) in 
 
     def delete(self, id):
 
