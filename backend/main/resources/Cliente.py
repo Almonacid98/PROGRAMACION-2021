@@ -43,6 +43,6 @@ class Clientes(Resource):
     def post(self):    
         cliente = request.get_json()
         id = int(max(CLIENTES.keys())) + 1
-        CLIENTES[id] = bolson
+        CLIENTES[id] = cliente
         return CLIENTES[id], 201
 
