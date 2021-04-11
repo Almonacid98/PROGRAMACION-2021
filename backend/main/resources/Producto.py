@@ -1,7 +1,14 @@
 from flask_restful import Resource
 from flask import request
 
-
+PRODUCTOS = {
+    1: {'name' : 'Producto A'},
+    2: {'name' : 'Producto B'},
+    3: {'name' : 'Producto C'},
+    4: {'name' : 'Producto D'},
+    5: {'name' : 'Producto E'},
+    6: {'name' : 'Producto F'}
+}
 
 
 class Producto():

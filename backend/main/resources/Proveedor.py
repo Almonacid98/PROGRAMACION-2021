@@ -1,8 +1,14 @@
 from flask_restful import Resource
 from flask import request
 
-
-
+PROVEEDORES = {
+    1: {'name' : 'Proveedor A'},
+    2: {'name' : 'Proveedor B'},
+    3: {'name' : 'Proveedor C'},
+    4: {'name' : 'Proveedor D'},
+    5: {'name' : 'Proveedor E'},
+    6: {'name' : 'Proveedor F'}
+}
 
 
 class Proveedor():
