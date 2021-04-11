@@ -1,5 +1,5 @@
 from flask_restful import Resource
-from flask import request
+
 
 BOLSONES = {
     1: {'name' : 'Bolson A'},
@@ -11,7 +11,7 @@ BOLSONES = {
     }
 
 
-class BolsonPrevio():
+class BolsonPrevio(Resource):
 
     def get(self, id):
         if int(id) in BOLSONES:
@@ -19,7 +19,7 @@ class BolsonPrevio():
         return '', 404
 
 
-class BolsonesPrevios():
+class BolsonesPrevios(Resource):
 
     def get(self):
         return BOLSONES
