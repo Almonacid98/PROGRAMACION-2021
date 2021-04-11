@@ -34,14 +34,15 @@ class Compra(Resource):
             return compra, 201
         return '', 404
 
-class Compras():
 
+class Compras(Resource):
+    
     def get(self):
         return COMPRAS
     
     def post(self):    
         compra = request.get_json()
         id = int(max(COMPRAS.keys())) + 1
-        PRODUCTOS[id] = compra
+        COMPRAS[id] = compra
         return COMPRAS[id], 201
 
