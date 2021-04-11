@@ -43,6 +43,6 @@ class Proveedores(Resource):
     def post(self):    
         proveedor = request.get_json()
         id = int(max(PROVEEDORES.keys())) + 1
-        PROVEEDORES[id] = bolson
+        PROVEEDORES[id] = proveedor
         return PROVEEDORES[id], 201
 
