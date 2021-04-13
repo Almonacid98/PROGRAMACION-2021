@@ -1,7 +1,7 @@
 import os 
 from flask import Flask
 from dotenv import load_dotenv
-from flask_restful import Api 
+from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 
 api = Api()
