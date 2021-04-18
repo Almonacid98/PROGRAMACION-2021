@@ -1,5 +1,7 @@
 from flask_restful import Resource
 from flask import request
+from .. import db
+from main.models import ProveedorModel
 
 PROVEEDORES = {
     1: {'name' : 'Proveedor A'},
