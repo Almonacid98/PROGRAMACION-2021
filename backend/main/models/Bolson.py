@@ -26,7 +26,7 @@ class Bolson(db.Model):
         nombre = bolson_json.get('nombre')
         aprobado = bolson_json.get('aprobado')
         fecha = bolson_json.get('fecha')
-        return Bolson(id = id
+        return Bolson(id = id,
                     nombre = nombre,
                     aprobado = aprobado,
                     fecha = fecha,

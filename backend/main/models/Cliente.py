@@ -1,6 +1,6 @@
 from .. import db
 
-class Cliente(db.Model):+
+class Cliente(db.Model):
 
     id = db.Column(db.Integer, primary_key = True)
     nombre = db.Column(db.String(100), nullable = False)
@@ -29,7 +29,7 @@ class Cliente(db.Model):+
         apellido = cliente_json.get('apellido')
         telefono = cliente_json.get('telefono')
         mail = cliente_json.get('mail')
-        return Cliente(id = id
+        return Cliente(id = id,
                         nombre = nombre,
                         apellido = apellido,
                         telefono = telefono, 

@@ -12,7 +12,7 @@ class Compra(db.Model):
     def to_json(self):
         compra_json = {
             'id' : self.id,
-            'fecha_hora_compra' : self.fecha_hora_compra.isoformat()
+            'fecha_hora_compra' : self.fecha_hora_compra.isoformat(),
             'retirado' : self.retirado,
 
         }
