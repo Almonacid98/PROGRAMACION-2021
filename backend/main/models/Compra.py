@@ -1,6 +1,7 @@
 from .. import db
 
 class Compra(db.Model):
+    
     id = db.Column(db.Integer, primary_key = True)
     fecha_hora_compra = db.Column(db.DateTime, nullable = False)
     retirado = db.Column(db.Boolean, nullable = False)
