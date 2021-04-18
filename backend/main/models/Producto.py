@@ -22,4 +22,4 @@ class Producto(db.Model):
         nombre = producto_json.get('nombre')
         return Producto(id = id,
                         nombre = nombre, 
-                            )
+                        )
