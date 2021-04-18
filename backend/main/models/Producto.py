@@ -2,7 +2,6 @@ from .. import db
 
 class Producto(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    proveedorid = db.Column(db.Integer, db.ForeignKey('proveedor.id', ondelete="RESTRICT"), nullable=False))
     nombre = db.Column(db.String(100), nullable = False)
 
     def __repr__(self):
