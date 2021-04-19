@@ -15,12 +15,11 @@ BOLSONES = {
 class BolsonVenta(Resource):
 
     def get(self, id):
-        if int(id) in BOLSONES:
-            return BOLSONES[int(id)]
-        return '', 404
-
+        bolsonventa = db.session.query(BolsonModel).get_or_404(id)
+        return bolsonventa.to_json()
 
 class BolsonesVenta(Resource):
 
     def get(self):
-        return BOLSONES
+        bolsonesventa = db.session.query(BolsonModel).all()
+        return jsonify([bolsonventa.to_json() for bolsonventa in bolsonesventa])

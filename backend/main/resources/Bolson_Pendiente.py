@@ -12,33 +12,35 @@ class BolsonPendiente(Resource):
 
     def get(self, id):
         
-        if int(id) in BOLSONES:  
-            return BOLSONES[int(id)]
-        return '', 404
+        bolsonpendiente = db.session.query(BolsonModel).get_or_404(id)
+        return bolsonpendiente.to_json()
     
     def delete(self, id):
         
-        if int(id) in BOLSONES:
-            del BOLSONES[int(id)]
-            return '', 204
-        return '', 404
+        bolsonpendiente = db.session.query(BolsonModel).get_or_404(id)
+        db.session.delete(bolsonpendiente)
+        db.session.commit()
+        return '', 204
     
     def put(self, id):
-        if int(id) in BOLSONES:
-            bolson = BOLSONES[int(id)]
-            data = request.get_json()
-            bolson.update(data)
-            return bolson, 201
-        return '', 404
+        
+        bolsonpendiente = db.session.query(BolsonModel).get_or_404(id)
+        data = request.get_json().items()
+        for key, value in data:
+            setattr(bolsonpendiente, key, value)
+        db.session.add(bolsonpendiente)
+        db.session.commit()
+        return bolsonpendiente.to_json(), 201
 
 
 class BolsonesPendientes(Resource):
     
     def get(self):
-        return BOLSONES
+        bolsonespendientes = db.session.query(BolsonModel).all()
+        return jsonify([bolsonpendiente.to_json() for bolsonpendiente in bolsonespendientes])
     
     def post(self):    
-        bolson = request.get_json()
-        id = int(max(BOLSONES.keys())) + 1
-        BOLSONES[id] = bolson
-        return BOLSONES[id], 201
+        bolsonpendiente = BolsonModel.from_json(request.get_json())
+        db.session.add(bolsonpendiente)
+        db.session.commit()
+        return bolsonpendiente.to_json(), 201

@@ -11,12 +11,11 @@ BOLSONES = {
 class BolsonPrevio(Resource):
 
     def get(self, id):
-        if int(id) in BOLSONES:
-            return BOLSONES[int(id)]
-        return '', 404
-
+        bolsonprevio = db.session.query(BolsonModel).get_or_404(id)
+        return bolsonprevio.to_json()
 
 class BolsonesPrevios(Resource):
 
     def get(self):
-        return BOLSONES
+        bolsonesprevios = db.session.query(BolsonModel).all()
+        return jsonify([bolsonprevio.to_json() for bolsonprevio in bolsonesprevios])
