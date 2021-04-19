@@ -36,10 +36,12 @@ class BolsonPendiente(Resource):
 class BolsonesPendientes(Resource):
     
     def get(self):
+
         bolsonespendientes = db.session.query(BolsonModel).all()
         return jsonify([bolsonpendiente.to_json() for bolsonpendiente in bolsonespendientes])
     
-    def post(self):    
+    def post(self):
+            
         bolsonpendiente = BolsonModel.from_json(request.get_json())
         db.session.add(bolsonpendiente)
         db.session.commit()
