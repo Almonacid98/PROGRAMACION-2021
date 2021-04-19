@@ -1,4 +1,5 @@
 from .. import db
+import datetime as dt
 
 class Bolson(db.Model):
 
@@ -25,7 +26,7 @@ class Bolson(db.Model):
         id = bolson_json.get('id')
         nombre = bolson_json.get('nombre')
         aprobado = bolson_json.get('aprobado')
-        fecha = bolson_json.get('fecha')
+        fecha = dt.datetime.strptime(bolson_json.get('fecha'), '%Y/%m/%d %H:%M:%S')
         return Bolson(id = id,
                     nombre = nombre,
                     aprobado = aprobado,

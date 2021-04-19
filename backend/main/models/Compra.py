@@ -1,4 +1,5 @@
 from .. import db
+import datetime as dt
 
 class Compra(db.Model):
     
@@ -21,7 +22,7 @@ class Compra(db.Model):
 
     def from_json(compra_json):
         id = compra_json.get('id')
-        fecha_hora_compra = compra_json.get('fecha_hora_compra')
+        fecha_hora_compra = dt.datetime.strptime(compra_json.get('fecha_hora_compra'), '%Y/%m/%d %H:%M:%S')
         retirado = compra_json.get('retirado')
         return Compra(id = id,
                     fecha_hora_compra = fecha_hora_compra,
