@@ -4,9 +4,6 @@ from flask import request, jsonify
 from .. import db
 from main.models import BolsonModel
 from datetime import datetime
-BOLSONES = {
-    1: {'name' : 'Bolson F'}
-    }
 
 
 class BolsonPendiente(Resource):
@@ -44,7 +41,8 @@ class BolsonesPendientes(Resource):
         bolsonespendientes = db.session.query(BolsonModel).all()
         return jsonify([bolsonpendiente.to_json() for bolsonpendiente in bolsonespendientes])
     
-    def post(self):    
+    def post(self):
+            
         bolsonpendiente = BolsonModel.from_json(request.get_json())
         db.session.add(bolsonpendiente)
         db.session.commit()

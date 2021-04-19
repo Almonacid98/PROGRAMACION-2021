@@ -4,15 +4,6 @@ from flask import request, jsonify
 from .. import db
 from main.models import ProductoModel
 
-PRODUCTOS = {
-    1: {'name' : 'Producto A'},
-    2: {'name' : 'Producto B'},
-    3: {'name' : 'Producto C'},
-    4: {'name' : 'Producto D'},
-    5: {'name' : 'Producto E'},
-    6: {'name' : 'Producto F'}
-}
-
 
 class Producto(Resource):
 

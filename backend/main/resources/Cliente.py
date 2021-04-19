@@ -4,15 +4,6 @@ from flask import request, jsonify
 from .. import db
 from main.models import ClienteModel
 
-CLIENTES = {
-    1: {'name' : 'Santiago', 'lastname': 'Pérez'},
-    2: {'name' : 'Luciano', 'lastname': 'Gonzáles'},
-    3: {'name' : 'Valentina', 'lastname': 'Contreras'},
-    4: {'name' : 'Florencia', 'lastname': 'Nuñes'},
-    5: {'name' : 'Esteban', 'lastname': 'Gómez'},
-    6: {'name' : 'Luz', 'lastname': 'Inojo'}
-    }
-
 
 class Cliente(Resource):
 

@@ -5,15 +5,6 @@ from .. import db
 from main.models import CompraModel
 from datetime import datetime
 
-COMPRAS = {
-    1: {'name' : 'Compra A'},
-    2: {'name' : 'Compra B'},
-    3: {'name' : 'Compra C'},
-    4: {'name' : 'Compra D'},
-    5: {'name' : 'Compra E'},
-    6: {'name' : 'Compra F'}
-}
-
 
 class Compra(Resource):
 
