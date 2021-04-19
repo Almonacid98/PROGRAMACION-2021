@@ -1,9 +1,9 @@
 from flask_restful import Resource
-from flask import request 
+from flask import request
 from flask import request, jsonify
 from .. import db
 from main.models import BolsonModel
-
+from datetime import datetime
 BOLSONES = {
     1: {'name' : 'Bolson F'}
     }
@@ -28,7 +28,10 @@ class BolsonPendiente(Resource):
         bolsonpendiente = db.session.query(BolsonModel).get_or_404(id)
         data = request.get_json().items()
         for key, value in data:
-            setattr(bolsonpendiente, key, value)
+            if key == 'fecha':
+                setattr(bolsonpendiente, key, datetime.strptime(value, '%Y/%m/%d %H:%M:%S'))
+            else:
+                setattr(bolsonpendiente, key, value)
         db.session.add(bolsonpendiente)
         db.session.commit()
         return bolsonpendiente.to_json(), 201
@@ -41,8 +44,7 @@ class BolsonesPendientes(Resource):
         bolsonespendientes = db.session.query(BolsonModel).all()
         return jsonify([bolsonpendiente.to_json() for bolsonpendiente in bolsonespendientes])
     
-    def post(self):
-            
+    def post(self):    
         bolsonpendiente = BolsonModel.from_json(request.get_json())
         db.session.add(bolsonpendiente)
         db.session.commit()

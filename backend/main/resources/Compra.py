@@ -3,6 +3,7 @@ from flask import request
 from flask import request, jsonify
 from .. import db
 from main.models import CompraModel
+from datetime import datetime
 
 COMPRAS = {
     1: {'name' : 'Compra A'},
@@ -33,7 +34,10 @@ class Compra(Resource):
         compra = db.session.query(CompraModel).get_or_404(id)
         data = request.get_json().items()
         for key, value in data:
-            setattr(compra, key, value)
+            if key == 'fecha_hora_compra':
+                setattr(compra, key, datetime.strptime(value, '%Y/%m/%d %H:%M:%S'))
+            else:
+                setattr(compra, key, value)
         db.session.add(compra)
         db.session.commit()
         return compra.to_json(), 201
