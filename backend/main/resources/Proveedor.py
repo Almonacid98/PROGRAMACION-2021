@@ -17,34 +17,38 @@ class Proveedor(Resource):
 
     def get(self, id):
         
-        if int(id) in PROVEEDORES:  
-            return PROVEEDORES[int(id)]
-        return '', 404
+        proveedor = db.session.query(ProveedorModel).get_or_404(id)
+        return proveedor.to_json()
     
     def delete(self, id):
         
-        if int(id) in PROVEEDORES:
-            del PROVEEDORES[int(id)]
-            return '', 204
-        return '', 404
+        proveedor = db.session.query(ProveedorModel).get_or_404(id)
+        db.session.delete(proveedor)
+        db.session.commit()
+        return '', 204
     
     def put(self, id):
-        if int(id) in PROVEEDORES:
-            proveedor = PROVEEDORES[int(id)]
-            data = request.get_json()
-            proveedor.update(data)
-            return proveedor, 201
-        return '', 404
+
+        proveedor = db.session.query(ProveedorModel).get_or_404(id)
+        data = request.get_json().items()
+        for key, value in data:
+            setattr(proveedor, key, value)
+        db.session.add(proveedor)
+        db.session.commit()
+        return proveedor.to_json(), 201
 
 
 class Proveedores(Resource):
     
     def get(self):
-        return PROVEEDORES
+
+        proveedores = db.session.query(ProveedorModel).all()
+        return jsonify([proveedor.to_json() for proveedor in proveedores])
     
-    def post(self):    
-        proveedor = request.get_json()
-        id = int(max(PROVEEDORES.keys())) + 1
-        PROVEEDORES[id] = proveedor
-        return PROVEEDORES[id], 201
+    def post(self): 
+
+        proveedor = ProveedorModel.from_json(request.get_json())
+        db.session.add(proveedor)
+        db.session.commit()
+        return proveedor.to_json(), 201
 
