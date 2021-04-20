@@ -1,7 +1,7 @@
 from .. import db
 import datetime as dt
 from . import ClienteModel
-from . import BolsonModel
+from . import BolsonModel 
 
 class Compra(db.Model):
     
