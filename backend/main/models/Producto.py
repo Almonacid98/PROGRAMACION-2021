@@ -1,5 +1,5 @@
 from .. import db
-
+from main.models import ProveedorModel
 class Producto(db.Model):
     
     id = db.Column(db.Integer, primary_key = True)
@@ -12,6 +12,7 @@ class Producto(db.Model):
         return '<Producto: %r >' % (self.nombre)
 
     def to_json(self):
+        self.proveedor = db.session.query(ProveedorModel).get_or_404(self.proveedorid)
         producto_json = {
             'id' : self.id,
             'nombre' : str(self.nombre),

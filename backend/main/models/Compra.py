@@ -1,5 +1,7 @@
 from .. import db
 import datetime as dt
+from main.models import ClienteModel
+from main.models import BolsonModel
 
 class Compra(db.Model):
     
@@ -15,6 +17,8 @@ class Compra(db.Model):
         return '<Compra: %r %r >' % (self.fecha_hora_compra, self.retirado)
 
     def to_json(self):
+        cliente = db.session.query(ClienteModel).get_or_404(self.clienteid)
+        bolson = db.session.query(BolsonModel).get_or_404(self.bolsonid)
         compra_json = {
             'id' : self.id,
             'fecha_hora_compra' : self.fecha_hora_compra.isoformat(),
