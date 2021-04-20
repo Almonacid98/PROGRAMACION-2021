@@ -6,6 +6,7 @@ class Proveedor(db.Model):
     nombre = db.Column(db.String(100), nullable = False)
     telefono = db.Column(db.String(100), nullable = False)
     productos = db.relationship("Producto", back_populates = "proveedor")
+    
     def __repr__(self):
         return '<Proveedor: %r %r >' % (self.nombre, self.telefono)
     
