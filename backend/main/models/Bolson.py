@@ -7,7 +7,8 @@ class Bolson(db.Model):
     nombre = db.Column(db.String(100), nullable = False)
     aprobado = db.Column(db.Boolean, nullable = False)
     fecha = db.Column(db.DateTime, nullable = False)
-
+    compras = db.relationship('Compra', back_populates = 'bolson')
+    
     def __repr__(self):
         return '<Bolson %r %r %r >' % (self.nombre, self.aprobado, self.fecha)
     
