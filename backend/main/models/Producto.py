@@ -6,8 +6,8 @@ class Producto(db.Model):
     nombre = db.Column(db.String(100), nullable = False)
     proveedorid = db.Column(db.Integer, db.ForeignKey('proveedor.id'), nullable = False)
     proveedor = db.relationship('Proveedor', back_populates = 'productos', uselist = False, single_parent = True)
-    productos_bolsones = relationship('ProductoBolson', back_populates = 'producto')
-    
+    productos_bolsones = db.relationship('ProductoBolson', back_populates = 'producto')
+
     def __repr__(self):
         return '<Producto: %r >' % (self.nombre)
 
