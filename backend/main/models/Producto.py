@@ -1,5 +1,6 @@
 from .. import db
-from main.models import ProveedorModel
+from . import ProveedorModel
+
 class Producto(db.Model):
     
     id = db.Column(db.Integer, primary_key = True)
