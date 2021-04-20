@@ -3,3 +3,4 @@ from .Producto import Producto as ProductoModel
 from .Compra import Compra as CompraModel
 from .Cliente import Cliente as ClienteModel
 from .Proveedor import Proveedor as ProveedorModel
+from .Producto_Bolson import ProductoBolson as ProductoBolsonModel
