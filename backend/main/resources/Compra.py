@@ -37,13 +37,23 @@ class Compras(Resource):
     
     def get(self):
         
-        compras = db.session.query(CompraModel).all()
-        return jsonify([compra.to_json() for compra in compras])
+        filters = request.get_json().items()
+        compras = db.session.query(CompraModel)
+        for key, value in filters:
+            if key == "clienteid":
+                compras = compras.filter(CompraModel.clienteid == value)
+            if key == "bolsonid":
+                compras = compras.filter(CompraModel.bolsonid == value)
+        compras = compras.all()
+        return jsonify({ 'compras': [compra.to_json() for compra in compras] })
     
     def post(self): 
 
         compra = CompraModel.from_json(request.get_json())
-        db.session.add(compra)
-        db.session.commit()
+        try:
+            db.session.add(compra)
+            db.session.commit()
+        except:
+            return '', 400
         return compra.to_json(), 201
 
