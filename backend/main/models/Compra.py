@@ -1,7 +1,7 @@
 from .. import db
 import datetime as dt
 from . import ClienteModel
-from . import BolsonModel 
+from . import BolsonModel
 
 class Compra(db.Model):
     
@@ -24,7 +24,7 @@ class Compra(db.Model):
             'fecha_hora_compra' : self.fecha_hora_compra.isoformat(),
             'retirado' : self.retirado,
             'cliente' : self.cliente.to_json(),
-            'bolson' : self.bolson.to_json(), 
+            'bolson' : self.bolson.to_json() 
         }
         return compra_json
     @staticmethod

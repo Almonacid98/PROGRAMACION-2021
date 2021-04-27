@@ -16,7 +16,7 @@ class ProductoBolson(db.Model):
         productobolson_json = {
             'id' : self.id,
             'producto' : self.producto.to_json(),
-            'bolson' : self.bolson.to_json(),
+            'bolson' : self.bolson.to_json()
         }
         return productobolson_json
     @staticmethod
