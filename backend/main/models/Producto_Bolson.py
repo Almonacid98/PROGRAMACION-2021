@@ -9,7 +9,7 @@ class ProductoBolson(db.Model):
     bolsonid = db.Column(db.Integer, db.ForeignKey('bolson.id'), nullable = False)
     producto = db.relationship('Producto', back_populates = 'productos_bolsones', uselist = False, single_parent = True)
     bolson = db.relationship('Bolson', back_populates = 'productos_bolsones', uselist = False, single_parent = True)
-
+    cantidad = db.Column(db.Float, nullable = False)
     def to_json(self):
         self.producto = db.session.query(ProductoModel).get_or_404(self.productoid)
         self.bolson = db.session.query(BolsonModel).get_or_404(self.bolsonid)
