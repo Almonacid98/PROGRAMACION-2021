@@ -1,7 +1,6 @@
 from .. import db
 import datetime as dt
-from . import ClienteModel
-from . import BolsonModel
+from . import ClienteModel, BolsonModel
 
 class Compra(db.Model):
     
@@ -10,8 +9,8 @@ class Compra(db.Model):
     retirado = db.Column(db.Boolean, nullable = False)
     clienteid = db.Column(db.Integer, db.ForeignKey('cliente.id'), nullable = False)
     bolsonid = db.Column(db.Integer, db.ForeignKey('bolson.id'), nullable = False)
-    cliente = db.relationship('Cliente', back_populates = 'Compras', uselist = False, single_parent = True)
-    bolson = db.relationship('Bolson', back_populates = 'Compras', uselist = False, single_parent = True)
+    cliente = db.relationship('Cliente', back_populates = 'compras', uselist = False, single_parent = True)
+    bolson = db.relationship('Bolson', back_populates = 'compras', uselist = False, single_parent = True)
 
     def __repr__(self):
         return '<Compra: %r %r >' % (self.fecha_hora_compra, self.retirado)

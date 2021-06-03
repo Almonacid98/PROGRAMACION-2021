@@ -1,6 +1,5 @@
 from .. import db
-from . import ProductoModel
-from . import BolsonModel
+from . import ProductoModel, BolsonModel
 
 class ProductoBolson(db.Model):
 
