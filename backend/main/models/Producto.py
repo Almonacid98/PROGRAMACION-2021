@@ -1,5 +1,5 @@
 from .. import db
-from . import ProveedorModel
+from .Proveedor import Proveedor as ProveedorModel 
 
 class Producto(db.Model):
     

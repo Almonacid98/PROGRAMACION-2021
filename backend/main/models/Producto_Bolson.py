@@ -1,6 +1,6 @@
 from .. import db
-from . import ProductoModel, BolsonModel
-
+from  .Bolson import Bolson as BolsonModel
+from .Producto import Producto as ProductoModel
 class ProductoBolson(db.Model):
 
     id = db.Column(db.Integer, primary_key = True)
