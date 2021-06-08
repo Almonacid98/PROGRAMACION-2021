@@ -1,7 +1,7 @@
 from flask_restful import Resource
 from flask import request, jsonify
 from .. import db
-from .Bolson import Bolson as BolsonModel
+from main.models import BolsonModel
 
 class Bolson(Resource):
 

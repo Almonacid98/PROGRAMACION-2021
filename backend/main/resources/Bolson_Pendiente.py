@@ -2,7 +2,7 @@ from flask_restful import Resource
 from flask import request
 from flask import request, jsonify
 from .. import db
-from .Bolson import Bolson as BolsonModel
+from main.models import BolsonModel
 from datetime import datetime
 
 
