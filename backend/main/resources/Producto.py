@@ -4,7 +4,6 @@ from flask import request, jsonify
 from .. import db
 from main.models import ProductoModel
 
-
 class Producto(Resource):
 
     def get(self, id):
