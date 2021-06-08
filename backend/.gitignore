@@ -133,3 +133,4 @@ dmypy.json
 /lib64
 pyvenv.cfg
 .vs/
+../.idea/
