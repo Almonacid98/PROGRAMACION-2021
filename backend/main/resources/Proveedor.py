@@ -2,7 +2,7 @@ from flask_restful import Resource
 from flask import request
 from flask import request, jsonify
 from .. import db
-from main.models import ProveedorModel 
+from main.models import ProveedorModel
 
 
 class Proveedor(Resource):
