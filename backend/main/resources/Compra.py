@@ -37,13 +37,14 @@ class Compras(Resource):
     
     def get(self):
         
-        filters = request.get_json().items()
+        filters = request.data
         compras = db.session.query(CompraModel)
-        for key, value in filters:
-            if key == "clienteid":
-                compras = compras.filter(CompraModel.clienteid == value)
-            if key == "bolsonid":
-                compras = compras.filter(CompraModel.bolsonid == value)
+        if filters:
+            for key, value in request.get_json().items():
+                if key == "clienteid":
+                    compras = compras.filter(CompraModel.clienteid == value)
+                if key == "bolsonid":
+                    compras = compras.filter(CompraModel.bolsonid == value)
         compras = compras.all()
         return jsonify({ 'compras': [compra.to_json() for compra in compras] })
     
