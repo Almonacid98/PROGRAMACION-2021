@@ -33,11 +33,12 @@ class Productos(Resource):
     
     def get(self):
 
-        filters = request.get_json().items()      
+        filters = request.data     
         productos = db.session.query(ProductoModel)
-        for key, value in filters:
-            if key == "proveedorid":
-                productos = productos.filter(ProductoModel.proveedorid == value)
+        if filters:
+            for key, value in request.get_json().items():
+                if key == "proveedorid":
+                    productos = productos.filter(ProductoModel.proveedorid == value)
         productos = productos.all()
         return jsonify({'productos' : [producto.to_json() for producto in productos]})
     
