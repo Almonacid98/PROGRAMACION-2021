@@ -55,6 +55,6 @@ class Compras(Resource):
             db.session.add(compra)
             db.session.commit()
         except:
-            return '', 400
+            return 'El formato utilizado no es correcto', 400
         return compra.to_json(), 201
 

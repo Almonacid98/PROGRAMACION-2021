@@ -49,5 +49,5 @@ class Productos(Resource):
             db.session.add(producto)
             db.session.commit()
         except:
-            return '', 400
+            return 'El formato utilizado no es correcto', 400
         return producto.to_json(), 201
