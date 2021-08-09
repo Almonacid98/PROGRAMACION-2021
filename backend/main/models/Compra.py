@@ -11,7 +11,7 @@ class Compra(db.Model):
     bolsonid = db.Column(db.Integer, db.ForeignKey('bolson.id'), nullable = False)
     bolson = db.relationship('Bolson', back_populates = 'compras', uselist = False, single_parent = True)
     usuarioid = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable = False)
-    usuario = db.relationship('Usuario', back_populates = 'compras', Uselist = False, single_parent = True)
+    usuarios = db.relationship('Usuario', back_populates = 'compras', Uselist = False, single_parent = True)
 
     def __repr__(self):
         return '<Compra: %r %r >' % (self.fecha_hora_compra, self.retirado)
@@ -24,7 +24,7 @@ class Compra(db.Model):
             'retirado' : self.retirado,
             'cliente' : self.cliente.to_json(),
             'bolson' : self.bolson.to_json(),
-            'usuario' : self.usuario.to_json(),
+            'usuario' : self.usuarios.to_json(),
 
         }
         return compra_json
