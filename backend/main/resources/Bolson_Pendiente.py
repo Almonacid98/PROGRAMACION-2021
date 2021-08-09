@@ -4,15 +4,18 @@ from flask import request, jsonify
 from .. import db
 from main.models import BolsonModel
 from datetime import datetime
-
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from main.auth.Decoradores import admin_required
 
 class BolsonPendiente(Resource):
-
+    
+    @jwt_required()
     def get(self, id):
         
         bolsonpendiente = db.session.query(BolsonModel).get_or_404(id)
         return bolsonpendiente.to_json()
     
+    @admin_required()
     def delete(self, id):
         
         bolsonpendiente = db.session.query(BolsonModel).get_or_404(id)
@@ -20,6 +23,7 @@ class BolsonPendiente(Resource):
         db.session.commit()
         return '', 204
     
+    jwt_required()
     def put(self, id):
         
         bolsonpendiente = db.session.query(BolsonModel).get_or_404(id)
@@ -36,6 +40,7 @@ class BolsonPendiente(Resource):
 
 class BolsonesPendientes(Resource):
     
+    @jwt_required()
     def get(self):
 
         page = 1

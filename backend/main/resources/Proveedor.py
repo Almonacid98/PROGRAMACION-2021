@@ -3,15 +3,18 @@ from flask import request
 from flask import request, jsonify
 from .. import db
 from main.models import ProveedorModel
-
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from main.auth.Decoradores import admin_required
 
 class Proveedor(Resource):
-
+    
+    @jwt_required()
     def get(self, id):
         
         proveedor = db.session.query(ProveedorModel).get_or_404(id)
         return proveedor.to_json()
     
+    @admin_required()
     def delete(self, id):
         
         proveedor = db.session.query(ProveedorModel).get_or_404(id)
@@ -19,6 +22,7 @@ class Proveedor(Resource):
         db.session.commit()
         return '', 204
     
+    @jwt_required()
     def put(self, id):
 
         proveedor = db.session.query(ProveedorModel).get_or_404(id)
@@ -32,6 +36,7 @@ class Proveedor(Resource):
 
 class Proveedores(Resource):
     
+    @jwt_required()
     def get(self):
 
         page = 1

@@ -3,14 +3,18 @@ from flask import request
 from flask import request, jsonify
 from .. import db
 from main.models import ClienteModel
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from main.auth.Decoradores import admin_required
 
 class Cliente(Resource):
 
+    @jwt_required()
     def get(self, id):
         
         cliente = db.session.query(ClienteModel).get_or_404(id)
         return cliente.to_json()
     
+    @admin_required()
     def delete(self, id):
         
         cliente = db.session.query(ClienteModel).get_or_404(id)
@@ -18,6 +22,7 @@ class Cliente(Resource):
         db.session.commit()
         return '', 204
     
+    jwt_required()
     def put(self, id):
 
         cliente = db.session.query(ClienteModel).get_or_404(id)
@@ -31,6 +36,7 @@ class Cliente(Resource):
 
 class Clientes(Resource):
     
+    @jwt_required()
     def get(self):
 
         page = 1
