@@ -49,7 +49,7 @@ def create_app():
     api.init_app(app)
 
     #Carga clave secreta
-    app.config.['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
+    app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
     #Tiempo de expiración de Tokens
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = int(os.getenv('JWT_ACCESS_TOKEN_EXPIRES'))
     jwt.init_app(app)
