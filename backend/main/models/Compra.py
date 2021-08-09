@@ -2,6 +2,7 @@ from .. import db
 import datetime as dt
 from .Cliente import Cliente as ClienteModel
 from .Bolson import Bolson as BolsonModel
+
 class Compra(db.Model):
     
     id = db.Column(db.Integer, primary_key = True)
