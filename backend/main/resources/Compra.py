@@ -4,15 +4,17 @@ from flask import request, jsonify
 from .. import db
 from main.models import CompraModel
 from datetime import datetime
-
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 class Compra(Resource):
 
+    @jwt_required(optional=True)
     def get(self, id):
         
         compra = db.session.query(CompraModel).get_or_404(id)
         return compra.to_json()
     
+    @jwt_required()
     def delete(self, id):
         
         compra = db.session.query(CompraModel).get_or_404(id)
@@ -20,6 +22,7 @@ class Compra(Resource):
         db.session.commit()
         return '', 204
     
+    @jwt_required()
     def put(self, id):
 
         compra = db.session.query(CompraModel).get_or_404(id)
@@ -48,6 +51,7 @@ class Compras(Resource):
         compras = compras.all()
         return jsonify({ 'compras': [compra.to_json() for compra in compras] })
     
+    @jwt_required()
     def post(self): 
 
         compra = CompraModel.from_json(request.get_json())

@@ -3,14 +3,17 @@ from flask import request
 from flask import request, jsonify
 from .. import db
 from main.models import ProductoModel
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 class Producto(Resource):
 
+    @jwt_required(optional=True)
     def get(self, id):
         
         producto = db.session.query(ProductoModel).get_or_404(id)
         return producto.to_json()
     
+    @jwt_required()
     def delete(self, id):
         
         producto = db.session.query(ProductoModel).get_or_404(id)
@@ -18,6 +21,7 @@ class Producto(Resource):
         db.session.commit()
         return '', 204
     
+    @jwt_required()
     def put(self, id):
 
         producto = db.session.query(ProductoModel).get_or_404(id)
@@ -42,6 +46,7 @@ class Productos(Resource):
         productos = productos.all()
         return jsonify({'productos' : [producto.to_json() for producto in productos]})
     
+    @jwt_required()
     def post(self):
         
         producto = ProductoModel.from_json(request.get_json())
