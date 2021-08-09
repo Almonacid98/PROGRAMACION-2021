@@ -1,7 +1,6 @@
 from collections import UserList
 from .. import db
 import datetime as dt
-from .Cliente import Cliente as ClienteModel
 from .Bolson import Bolson as BolsonModel
 
 class Compra(db.Model):
@@ -18,7 +17,6 @@ class Compra(db.Model):
         return '<Compra: %r %r >' % (self.fecha_hora_compra, self.retirado)
 
     def to_json(self):
-        self.cliente = db.session.query(ClienteModel).get_or_404(self.clienteid)
         self.bolson = db.session.query(BolsonModel).get_or_404(self.bolsonid)
         compra_json = {
             'id' : self.id,
