@@ -38,8 +38,23 @@ class BolsonesPendientes(Resource):
     
     def get(self):
 
-        bolsonespendientes = db.session.query(BolsonModel).all()
-        return jsonify([bolsonpendiente.to_json() for bolsonpendiente in bolsonespendientes])
+        page = 1
+        per_page = 10
+        bolsonespendientes = db.session.query(BolsonModel)
+        if request.get_json():
+            filters = request.get_json().items()
+            for key, value in filters:
+                if key == 'page':
+                    page = int(value)
+                if key == 'per_page':
+                    per_page = int(value)
+        bolsonespendientes = bolsonespendientes.paginate(page, per_page, True, 30) 
+
+        return jsonify({'bolsonespendientes': [bolsonpendiente.to_json() for bolsonpendiente in bolsonespendientes.items],
+        'total': bolsonespendientes.total,
+        'pages': bolsonespendientes.pages,
+        'page': page
+        })
     
     def post(self):
             
