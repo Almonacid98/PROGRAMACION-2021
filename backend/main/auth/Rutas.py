@@ -2,7 +2,6 @@ from os import access
 from sqlalchemy.sql.base import Executable
 
 from sqlalchemy.sql.operators import exists
-from backend.main.models.Usuario import Usuario
 from flask import request, jsonify, Blueprint
 from .. import db
 from main.models import UsuarioModel

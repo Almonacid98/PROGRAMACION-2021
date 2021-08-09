@@ -11,7 +11,7 @@ class Usuario(db.Model):
     email = db.Column(db.String(64), unique = True, index = True, nullable = False)
     contraseña = db.Column(db.String(128), nullable = False)
     rol = db.Column(db.String(10), nullable = False, default = 'user')
-    compras = db.relationship('Compra', back_populate = 'usuarios', cascade = 'all, delete-orphan')
+    compras = db.relationship('Compra', back_populates = 'usuarios', cascade = 'all, delete-orphan')
     productos = db.relationship('Producto', back_populates = 'usuarios')
 
     @property

@@ -2,7 +2,7 @@ from flask_restful import Resource
 from flask import request
 from flask import request, jsonify
 from .. import db
-from main.models import ProveedorModel
+from main.models import UsuarioModel
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from main.auth.Decoradores import admin_required
 
@@ -11,13 +11,13 @@ class Proveedor(Resource):
     @jwt_required()
     def get(self, id):
         
-        proveedor = db.session.query(ProveedorModel).get_or_404(id)
+        proveedor = db.session.query(UsuarioModel).get_or_404(id)
         return proveedor.to_json()
     
-    @admin_required()
+    @admin_required
     def delete(self, id):
         
-        proveedor = db.session.query(ProveedorModel).get_or_404(id)
+        proveedor = db.session.query(UsuarioModel).get_or_404(id)
         db.session.delete(proveedor)
         db.session.commit()
         return '', 204
@@ -25,7 +25,7 @@ class Proveedor(Resource):
     @jwt_required()
     def put(self, id):
 
-        proveedor = db.session.query(ProveedorModel).get_or_404(id)
+        proveedor = db.session.query(UsuarioModel).get_or_404(id)
         data = request.get_json().items()
         for key, value in data:
             setattr(proveedor, key, value)
@@ -41,7 +41,7 @@ class Proveedores(Resource):
 
         page = 1
         per_page = 10
-        proveedores = db.session.query(ProveedorModel)
+        proveedores = db.session.query(UsuarioModel)
         if request.get_json():
             filters = request.get_json().items()
             for key, value in filters:
@@ -59,7 +59,7 @@ class Proveedores(Resource):
     
     def post(self): 
 
-        proveedor = ProveedorModel.from_json(request.get_json())
+        proveedor = UsuarioModel.from_json(request.get_json())
         db.session.add(proveedor)
         db.session.commit()
         return proveedor.to_json(), 201

@@ -15,7 +15,7 @@ class BolsonPendiente(Resource):
         bolsonpendiente = db.session.query(BolsonModel).get_or_404(id)
         return bolsonpendiente.to_json()
     
-    @admin_required()
+    @admin_required
     def delete(self, id):
         
         bolsonpendiente = db.session.query(BolsonModel).get_or_404(id)
