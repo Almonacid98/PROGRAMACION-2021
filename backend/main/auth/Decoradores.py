@@ -3,12 +3,12 @@ from flask import jsonify
 from flask_jwt_extended import verify_jwt_in_request, get_jwt
 from functools import wraps
 
-def administrador_requerido(fn):
+def admin_required(fn):
     @wraps(fn)
     def wrapper(*args, **kwargs):
         verify_jwt_in_request()
         claims = get_jwt()
-        if claims['role'] == "admin":
+        if claims['rol'] == "admin":
             return fn(*args, **kwargs)
         else:
             return 'Únicamente el administrador tiene acceso', 403
@@ -16,5 +16,15 @@ def administrador_requerido(fn):
 
 @jwt.user_identity_loader
 
-def busqueda_identidad_de_usuario():
+def user_identity_lookup(usuario):
+    return usuario.id
+
+@jwt.additional_claims_loader
+def add_claims_to_access_token(usuario):
+    claims = {
+        'rol' : usuario.rol,
+        'id' : usuario.id,
+        'email' : usuario.email
+    }
+    return claims
     
