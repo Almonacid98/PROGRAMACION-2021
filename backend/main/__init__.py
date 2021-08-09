@@ -54,8 +54,8 @@ def create_app():
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = int(os.getenv('JWT_ACCESS_TOKEN_EXPIRES'))
     jwt.init_app(app)
 
-    from main.auth import routes
+    from main.auth import Rutas
     #Blueprint
-    app.register_blueprint(auth.routes.auth)
+    app.register_blueprint(auth.Rutas.auth)
 
     return app
