@@ -9,7 +9,7 @@ class Usuario(db.Model):
     apellido = db.Column(db.String(100), nullable = False)
     telefono = db.Column(db.String(100), nullable = False)
     email = db.Column(db.String(64), unique = True, index = True, nullable = False)
-    contraseña = db.Column(db.String(128), nullable = False)
+    password = db.Column(db.String(128), nullable = False)
     rol = db.Column(db.String(10), nullable = False, default = 'user')
     compras = db.relationship('Compra', back_populates = 'usuarios', cascade = 'all, delete-orphan')
     productos = db.relationship('Producto', back_populates = 'usuarios')
@@ -48,13 +48,13 @@ class Usuario(db.Model):
         apellido = usuario_json.get('apellido')
         telefono = usuario_json.get('telefono')
         email = usuario_json.get('email')
-        contraseña = usuario_json.get('contraseña')
+        password = usuario_json.get('password')
         rol = usuario_json.get('rol')
         return Usuario(id = id,
                     nombre = nombre,
                     apellido = apellido,
                     telefono = telefono,
                     email = email,
-                    plain_password = contraseña,
+                    plain_password = password,
                     rol = rol,
                     )
