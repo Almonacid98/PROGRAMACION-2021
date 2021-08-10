@@ -1,3 +1,4 @@
+from main.auth.Decoradores import proveedor_or_admin_required, proveedor_required
 from flask_restful import Resource
 from flask import request
 from flask import request, jsonify
@@ -17,7 +18,7 @@ class Producto(Resource):
         else:
             return producto.to_json_public()
     
-    @jwt_required()
+    @proveedor_required
     def delete(self, id):
         
         producto = db.session.query(ProductoModel).get_or_404(id)
@@ -25,7 +26,7 @@ class Producto(Resource):
         db.session.commit()
         return '', 204
     
-    @jwt_required()
+    @proveedor_or_admin_required
     def put(self, id):
 
         producto = db.session.query(ProductoModel).get_or_404(id)
@@ -38,24 +39,30 @@ class Producto(Resource):
 
 
 class Productos(Resource):
-    
+    @proveedor_or_admin_required
     def get(self):
 
-        filters = request.data     
+        page = 1
+        per_page = 10
         productos = db.session.query(ProductoModel)
-        if filters:
-            for key, value in request.get_json().items():
-                if key == "proveedorid":
-                    productos = productos.filter(ProductoModel.proveedorid == value)
-        productos = productos.all()
-        return jsonify({'productos' : [producto.to_json() for producto in productos]})
-    
-    @jwt_required()
+        if request.get_json():
+            filters = request.get_json().items()
+            for key, value in filters:
+                if key == "page":
+                    page = int(value)
+                if key == "per_page":
+                    per_page = int(value)
+        productos = productos.paginate(page, per_page, True, 30)
+        return jsonify({ 'productos': [producto.to_json() for producto in productos.items],
+                  'total': productos.total,
+                  'pages': productos.pages,
+                  'page': page
+                  })
+
+    @proveedor_required
     def post(self):
         
         producto = ProductoModel.from_json(request.get_json())
-        current_user = get_jwt_identity()
-        producto.usuarioid = current_user
         try:
             db.session.add(producto)
             db.session.commit()

@@ -5,10 +5,11 @@ from .. import db
 from main.models import UsuarioModel
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from main.auth.Decoradores import admin_required
+from main.auth.Decoradores import proveedor_or_admin_required
 
 class Proveedor(Resource):
     
-    @jwt_required()
+    @proveedor_or_admin_required
     def get(self, id):
         
         proveedor = db.session.query(UsuarioModel).get_or_404(id)
@@ -22,7 +23,7 @@ class Proveedor(Resource):
         db.session.commit()
         return '', 204
     
-    @jwt_required()
+    @admin_required
     def put(self, id):
 
         proveedor = db.session.query(UsuarioModel).get_or_404(id)
@@ -39,24 +40,10 @@ class Proveedores(Resource):
     @jwt_required()
     def get(self):
 
-        page = 1
-        per_page = 10
-        proveedores = db.session.query(UsuarioModel)
-        if request.get_json():
-            filters = request.get_json().items()
-            for key, value in filters:
-                if key == 'page':
-                    page = int(value)
-                if key == 'per_page':
-                    per_page = int(value)
-        proveedores = proveedores.paginate(page, per_page, True, 30) 
-
-        return jsonify({'proveedores': [proveedor.to_json() for proveedor in proveedores.items],
-        'total': proveedores.total,
-        'pages': proveedores.pages,
-        'page': page
-        })
+        proveedores = db.session.query(UsuarioModel).filter(UsuarioModel.rol == 'proveedor')
+        return jsonify([proveedor.to_json() for proveedor in proveedores])
     
+    @admin_required
     def post(self): 
 
         proveedor = UsuarioModel.from_json(request.get_json())
