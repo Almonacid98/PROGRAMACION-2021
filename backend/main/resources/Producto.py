@@ -11,7 +11,11 @@ class Producto(Resource):
     def get(self, id):
         
         producto = db.session.query(ProductoModel).get_or_404(id)
-        return producto.to_json()
+        current_identity = get_jwt_identity()
+        if current_identity:
+            return producto.to_json()
+        else:
+            return producto.to_json_public()
     
     @jwt_required()
     def delete(self, id):
@@ -50,9 +54,11 @@ class Productos(Resource):
     def post(self):
         
         producto = ProductoModel.from_json(request.get_json())
+        current_user = get_jwt_identity()
+        producto.usuarioid = current_user
         try:
             db.session.add(producto)
             db.session.commit()
-        except:
+        except Exception as error:
             return 'El formato utilizado no es correcto', 400
         return producto.to_json(), 201

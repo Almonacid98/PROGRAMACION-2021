@@ -12,7 +12,11 @@ class Compra(Resource):
     def get(self, id):
         
         compra = db.session.query(CompraModel).get_or_404(id)
-        return compra.to_json()
+        current_identity = get_jwt_identity()
+        if current_identity:
+            return compra.to_json()
+        else:
+            return compra.to_json_public()
     
     @jwt_required()
     def delete(self, id):
@@ -55,10 +59,12 @@ class Compras(Resource):
     def post(self): 
 
         compra = CompraModel.from_json(request.get_json())
+        current_user = get_jwt_identity()
+        compra.usuarioid = current_user
         try:
             db.session.add(compra)
             db.session.commit()
-        except:
+        except Exception as error:
             return 'El formato utilizado no es correcto', 400
         return compra.to_json(), 201
 
