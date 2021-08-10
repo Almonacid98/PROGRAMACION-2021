@@ -17,7 +17,6 @@ class Usuario(db.Model):
     @property
     def plain_password(self):
         raise AttributeError('La contraseña no se puede leer')
-    
     @plain_password.setter
     
     def plain_password(self, password):
