@@ -49,5 +49,3 @@ def add_claims_to_access_token(usuario):
         'email' : usuario.email
     }
     return claims
-    
-    
