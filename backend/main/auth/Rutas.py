@@ -9,12 +9,12 @@ from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_tok
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
 
-@auth.route('/login', methods = ['POST'])
+@auth.route('/login', methods=['POST'])
 
 def login():
     usuario = db.session.query(UsuarioModel).filter(UsuarioModel.email == request.get_json().get('email')).first_or_404()
-    if usuario.validate_pass(request.get_json().get('contraseña')):
-        access_token = create_access_token(identity= usuario)
+    if usuario.validate_pass(request.get_json().get('password')):
+        access_token = create_access_token(identity=usuario)
         data = {
             'id' : str(usuario.id),
             'email' : usuario.email,
