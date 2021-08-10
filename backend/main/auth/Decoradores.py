@@ -3,7 +3,7 @@ from flask import jsonify
 from flask_jwt_extended import verify_jwt_in_request, get_jwt
 from functools import wraps
 
-def admin_required(fn):
+def admin_required(fn): 
     @wraps(fn)
     def wrapper(*args, **kwargs):
         verify_jwt_in_request()
@@ -49,4 +49,5 @@ def add_claims_to_access_token(usuario):
         'email' : usuario.email
     }
     return claims
+    
     
