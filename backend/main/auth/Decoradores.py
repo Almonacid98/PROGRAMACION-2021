@@ -19,21 +19,21 @@ def proveedor_or_admin_required(fn):
     def wrapper(*args, **kwargs):
         verify_jwt_in_request()
         claims = get_jwt()
-        if claims['rol'] == 'admin' or claims['rol'] == 'proveedor':
+        if claims['rol'] == 'proveedor' or claims['rol'] == 'admin':
             return fn(*args, **kwargs)
         else:
             return 'Pueden acceder libremente solo los administradores/proveedores', 403
     return wrapper
 
-def cliente_or_admin_required(fn):
+def proveedor_required(fn):
     @wraps(fn)
     def wrapper(*args, **kwargs):
         verify_jwt_in_request()
         claims = get_jwt()
-        if claims['rol'] == 'admin' or claims['rol'] == 'cliente':
+        if claims['rol'] == 'proveedor':
             return fn(*args, **kwargs)
         else:
-            return 'Pueden acceder libremente solo los administradores/clientes', 403
+            return 'Pueden acceder libremente solo los proveedores', 403
     return wrapper
 
 @jwt.user_identity_loader
