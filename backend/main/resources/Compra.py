@@ -12,11 +12,7 @@ class Compra(Resource):
     def get(self, id):
         
         compra = db.session.query(CompraModel).get_or_404(id)
-        current_identity = get_jwt_identity()
-        if current_identity:
-            return compra.to_json()
-        else:
-            return compra.to_json_public()
+        return compra.to_json()
     
     @jwt_required()
     def delete(self, id):
