@@ -13,17 +13,23 @@ class BolsonPendiente(Resource):
     def get(self, id):
         
         bolsonpendiente = db.session.query(BolsonModel).get_or_404(id)
-        return bolsonpendiente.to_json()
-    
+        if bolsonpendiente.aprobado == 0:
+            return bolsonpendiente.to_json()
+        else:
+            return '', 404
+
     @admin_required
     def delete(self, id):
         
         bolsonpendiente = db.session.query(BolsonModel).get_or_404(id)
-        db.session.delete(bolsonpendiente)
-        db.session.commit()
-        return '', 204
-    
-    jwt_required()
+        if bolsonpendiente.aprobado == 0:
+            db.session.delete(bolsonpendiente)
+            db.session.commit()
+            return '', 204
+        else:
+            return '', 404
+
+    @admin_required
     def put(self, id):
         
         bolsonpendiente = db.session.query(BolsonModel).get_or_404(id)
@@ -33,10 +39,12 @@ class BolsonPendiente(Resource):
                 setattr(bolsonpendiente, key, datetime.strptime(value, '%Y/%m/%d %H:%M:%S'))
             else:
                 setattr(bolsonpendiente, key, value)
-        db.session.add(bolsonpendiente)
-        db.session.commit()
-        return bolsonpendiente.to_json(), 201
-
+        if bolsonpendiente.aprobado == 0:       
+            db.session.add(bolsonpendiente)
+            db.session.commit()
+            return bolsonpendiente.to_json(), 201
+        else:
+            return '', 404
 
 class BolsonesPendientes(Resource):
     
