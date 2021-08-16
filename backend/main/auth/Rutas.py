@@ -7,19 +7,36 @@ auth = Blueprint('auth', __name__, url_prefix='/auth')
 
 @auth.route('/login', methods=['POST'])
 def login():
-    usuario = db.session.query(UsuarioModel).filter(UsuarioModel.email == request.get_json().get('email')).first_or_404()
-    if usuario.validate_pass(request.get_json().get('password')):
+    usuario= db.session.query(UsuarioModel).filter(UsuarioModel.email == request.get_json().get("email")).first_or_404()
+    if usuario.validate_pass(request.get_json().get("password")):
         access_token = create_access_token(identity=usuario)
         data = {
-            'id' : str(usuario.id),
-            'email' : usuario.email,
-            'access_token' : access_token
+            'id': str(usuario.id),
+            'email': usuario.email,
+            'access_token': access_token
         }
+
         return data, 200
     else:
         return 'Contraseña incorrecta', 401
 
-@auth.route('/register', methods = ['POST'])
+"""""
+@auth.route("/cambiarpassword", methods=['GET', 'POST'])
+def changed_password():
+        password = db.session.query(UsuarioModel)
+    if request.methods == 'GET':
+    
+
+    if request.methods == 'POST':
+        
+        nuevo_password = request.form['newpassword']
+        confirmacion_password = request.form['passwordconfirmed']
+        if (nuevo_password == confirmacion_password):
+            return redirect(url_for('index'))
+        else:
+            return 'La contraseña no son iguales', 401
+   """""         
+@auth.route('/register', methods=['POST'])
 
 def register():
     usuario = UsuarioModel.from_json(request.get_json())
@@ -33,4 +50,5 @@ def register():
         except Exception as error:
             db.session.rollback()
             return str(error), 409
-        return usuario.to_json(), 201
+        return usuario.to_json() , 201
+
