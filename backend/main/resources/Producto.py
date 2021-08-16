@@ -12,11 +12,7 @@ class Producto(Resource):
     def get(self, id):
         
         producto = db.session.query(ProductoModel).get_or_404(id)
-        current_identity = get_jwt_identity()
-        if current_identity:
-            return producto.to_json()
-        else:
-            return producto.to_json_public()
+        return producto.to_json()
     
     @proveedor_required
     def delete(self, id):
