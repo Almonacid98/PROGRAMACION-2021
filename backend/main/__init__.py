@@ -9,7 +9,7 @@ from flask_mail import Mail
 api = Api()
 db = SQLAlchemy()
 jwt = JWTManager()
-sendemails = Mail()
+mailsender = Mail()
 
 def create_app():
     app = Flask(__name__)
@@ -70,6 +70,6 @@ def create_app():
     app.config['FLASKY_MAIL_SENDER'] = os.getenv('FLASKY_MAIL_SENDER')
 
     #inicio de app mail
-    sendemails.init_app(app)
+    mailsender.init_app(app)
     
     return app

@@ -1,9 +1,9 @@
-from backend.main.mail.Funciones import send_mail
 from flask import request, jsonify, Blueprint
 from .. import db
 from main.models import UsuarioModel
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 from main.mail.Funciones import send_mail
+
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -21,23 +21,25 @@ def login():
         return data, 200
     else:
         return 'Contraseña incorrecta', 401
-
 """""
-@auth.route("/cambiarpassword", methods=['GET', 'POST'])
-def changed_password():
-        password = db.session.query(UsuarioModel)
-    if request.methods == 'GET':
-    
+@auth.route("/changepassword", methods=['PUT'])
 
-    if request.methods == 'POST':
-        
-        nuevo_password = request.form['newpassword']
-        confirmacion_password = request.form['passwordconfirmed']
-        if (nuevo_password == confirmacion_password):
-            return redirect(url_for('index'))
+def change_password(request):
+    if request.method == 'PUT':
+        form = Password(request.usuario, request.POST)
+        if form.is_valid():
+            usuario = form.save()
+            update_session_auth_hash(request, usuario)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('change_password')
         else:
-            return 'La contraseña no son iguales', 401
-   """""         
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.usuario)
+    return render(request, 'accounts/change_password.html', {
+        'form': form
+    })
+"""
 @auth.route('/register', methods=['POST'])
 
 def register():
@@ -49,7 +51,7 @@ def register():
         try:
             db.session.add(usuario)
             db.session.commit()
-            sent = send_mail([usuario.email], "Bienvenido", "register", usuario = usuario)
+            sent = send_mail([usuario.email], "Bienvenido", 'registrarse', usuario = usuario)
         except Exception as error:
             db.session.rollback()
             return str(error), 409

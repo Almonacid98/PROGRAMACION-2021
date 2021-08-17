@@ -1,8 +1,8 @@
-Bienvenido {{usuario.nombre}} {{usuario.apellido}}!!
+Bienvenido {{cliente.nombre}} {{cliente.apellido}}!
 
 Gracias por haberse registrado en nuestro nuevo sistema.
 
 ¡Aquí se encuentran nuestras ofertas semanales! :
 {% for bolson in bolsones %}
-    {{bolson}}
- {% endfor %}
+    {{ bolson }}
+{% endfor %}

@@ -1,5 +1,5 @@
 from enum import unique
-from operator import index
+from operator import imod, index
 from .. import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -57,6 +57,3 @@ class Usuario(db.Model):
                     plain_password = password,
                     rol = rol,
                     )
-    """@classmethod
-    def changed_password(self, db, usuario):
-        self.password_hashed = Usuario.generate_password_hash(password)"""
